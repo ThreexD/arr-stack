@@ -2,7 +2,7 @@
 services:
 
 ############################
-# RADARR
+# RADARR: TV show downloader and manager
 ############################
 
   radarr:
@@ -22,7 +22,7 @@ services:
       - .env
     
 ############################
-# SONARR
+# SONARR: TV show downloader and manager
 ############################
 
   sonarr:
@@ -42,7 +42,7 @@ services:
       - .env
     
 ############################
-# PROWLARR
+# PROWLARR: Indexer manager for Sonarr, Radarr, and Lidarr 
 ############################
 
   prowlarr:
@@ -60,7 +60,7 @@ services:
       - .env
 
 ############################
-# BAZARR
+# BAZARR: Subtitle downloader and manager for Sonarr and Radarr  
 ############################
 
   bazarr:
@@ -80,7 +80,7 @@ services:
       - .env
     
 ############################
-# LIDARR
+# LIDARR: Music downloader and manager for artists and albums
 ############################
 
   lidarr:
@@ -100,7 +100,7 @@ services:
       - .env
     
 ############################
-# READARR
+# READARR: Ebook and audiobook downloader and manager  
 ############################
 
   readarr:
@@ -120,7 +120,7 @@ services:
       - .env
     
 ############################
-# QBITTORRENT		
+# QBITTORRENT: Torrent client with Web UI for automated downloads  
 ############################
 
   qbittorrent:
@@ -141,7 +141,7 @@ services:
       - .env
     
 ############################
-# JELLYFIN	
+# JELLYFIN: Media server for streaming movies, shows, and music 
 ############################
 
   jellyfin:
@@ -165,7 +165,7 @@ services:
       - .env
     
 ############################
-# GLUETUN
+# GLUETUN: VPN gateway routing container traffic via WireGuard/OpenVPN  
 ############################
 
   gluetun:
