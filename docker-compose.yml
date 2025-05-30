@@ -14,9 +14,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/radarr/config:/config
-      - /media/arr/radarr/movies:/movies #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/radarr/config:/config
+      - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
+      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
     env_file:
       - .env
@@ -34,9 +34,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/sonarr/config:/config
-      - /media/arr/sonarr/tvseries:/tv #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sonarr/config:/config
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
+      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
     env_file:
       - .env
@@ -54,7 +54,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/prowlarr/config:/config
+      - ${VOLUMNE_PATH}/prowlarr/config:/config
     restart: unless-stopped
     env_file:
       - .env
@@ -72,9 +72,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/bazarr/config:/config
-      - /media/arr/radarr/movies:/movies #optional
-      - /media/arr/sonarr/tvseries:/tv #optional
+      - ${VOLUMNE_PATH}/bazarr/config:/config
+      - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
     restart: unless-stopped
     env_file:
       - .env
@@ -92,9 +92,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/lidarr/config:/config
-      - /media/arr/lidarr/music:/music #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/lidarr/config:/config
+      - ${VOLUMNE_PATH}/lidarr/music:/music #optional
+      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
     env_file:
       - .env
@@ -112,9 +112,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/readarr/config:/config
-      - /media/arr/readarr/books:/books #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/readarr/config:/config
+      - ${VOLUMNE_PATH}/readarr/books:/books #optional
+      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
     env_file:
       - .env
@@ -134,8 +134,8 @@ services:
   #    - WEBUI_PORT=8080
   #    - TORRENTING_PORT=6881
   #  volumes:
-  #    - /media/arr/qbittorrent/config:/config
-  #    - /media/arr/qbittorrent/downloads:/downloads #optional
+  #    - ${VOLUMNE_PATH}/qbittorrent/config:/config
+  #    - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
   #  restart: unless-stopped
   #  env_file:
   #    - .env
@@ -152,7 +152,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/sabnzbd/config:/config
+      - ${VOLUMNE_PATH}/sabnzbd/config:/config
       #- /mount/nas/data/usenet:/data/usenet #optional
     restart: unless-stopped
     env_file:
@@ -170,9 +170,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /media/arr/jellyfin/config:/config
-      - /media/arr/sonarr/tvseries:/data/tvshows
-      - /media/arr/radarr/movies:/data/movies
+      - ${VOLUMNE_PATH}/jellyfin/config:/config
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/data/tvshows
+      - ${VOLUMNE_PATH}/radarr/movies:/data/movies
     ports:
       - 8096:8096
       - 8920:8920 #optional
@@ -195,7 +195,7 @@ services:
       - TZ=${TZ}
       - PORT=5055
     volumes:
-      - /media/arr/jellyseerr/config:/app/config
+      - ${VOLUMNE_PATH}/jellyseerr/config:/app/config
     restart: unless-stopped
     env_file:
       - .env
