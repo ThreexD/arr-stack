@@ -139,7 +139,23 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    
+
+############################
+#SABNZBD: Usenet download client with web-based interface
+############################
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /mnt/arr-config/sabnzbd/config:/config
+      - /mnt/nas/data/usenet:/data/usenet #optional
+    restart: unless-stopped
+
 ############################
 # JELLYFIN: Media server for streaming movies, shows, and music 
 ############################
