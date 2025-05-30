@@ -123,22 +123,22 @@ services:
 # QBITTORRENT: Torrent client with Web UI for automated downloads  
 ############################
 
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    network_mode: "service:gluetun"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - WEBUI_PORT=8080
-      - TORRENTING_PORT=6881
-    volumes:
-      - /media/arr/qbittorrent/config:/config
-      - /media/arr/qbittorrent/downloads:/downloads #optional
-    restart: unless-stopped
-    env_file:
-      - .env
+  #qbittorrent:
+  #  image: lscr.io/linuxserver/qbittorrent:latest
+  #  container_name: qbittorrent
+  #  network_mode: "service:gluetun"
+  #  environment:
+  #    - PUID=${PUID}
+  #    - PGID=${PGID}
+  #    - TZ=${TZ}
+  #    - WEBUI_PORT=8080
+  #    - TORRENTING_PORT=6881
+  #  volumes:
+  #    - /media/arr/qbittorrent/config:/config
+  #    - /media/arr/qbittorrent/downloads:/downloads #optional
+  #  restart: unless-stopped
+  #  env_file:
+  #    - .env
 
 ############################
 #SABNZBD: Usenet download client with web-based interface
@@ -148,9 +148,9 @@ services:
     container_name: sabnzbd
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /mnt/arr-config/sabnzbd/config:/config
       - /mnt/nas/data/usenet:/data/usenet #optional
@@ -194,9 +194,11 @@ services:
       - 6767:6767 #bazarr
       - 8686:8686 #lidarr
       - 8787:8787 #readarr
-      - 8080:8080 #qbittorrent
-      - 6881:6881 #qbittorrent
-      - 6881:6881/udp #qbittorrent
+      #- 8080:8080 #qbittorrent
+      #- 6881:6881 #qbittorrent
+      #- 6881:6881/udp #qbittorrent
+      - 8080:8080 # sabnzbd
+      - 9090:9090 # sabnzbd
     cap_add:
       - NET_ADMIN
     devices:
