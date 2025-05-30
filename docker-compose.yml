@@ -152,8 +152,8 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /mnt/arr-config/sabnzbd/config:/config
-      - /mnt/nas/data/usenet:/data/usenet #optional
+      - /media/arr/sabnzbd/config:/config
+      #- /mount/nas/data/usenet:/data/usenet #optional
     restart: unless-stopped
 
 ############################
@@ -179,6 +179,22 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+
+############################
+# JELYSEER: Request management interface for Jellyfin users  
+############################
+
+  jellyseerr:
+    image: ghcr.io/fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    network_mode: "service:gluetun"
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+      - PORT=5055
+    volumes:
+      - /media/arr/jellyseerr/config:/app/config
+    restart: unless-stopped
     
 ############################
 # GLUETUN: VPN gateway routing container traffic via WireGuard/OpenVPN  
