@@ -10,14 +10,16 @@ services:
     container_name: radarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/radarr/config:/config
       - /media/arr/radarr/movies:/movies #optional
       - /media/arr/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # SONARR
@@ -28,14 +30,16 @@ services:
     container_name: sonarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/sonarr/config:/config
       - /media/arr/sonarr/tvseries:/tv #optional
       - /media/arr/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # PROWLARR
@@ -46,12 +50,14 @@ services:
     container_name: prowlarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/prowlarr/config:/config
     restart: unless-stopped
+    env_file:
+      - .env
 
 ############################
 # BAZARR
@@ -62,14 +68,16 @@ services:
     container_name: bazarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/bazarr/config:/config
       - /media/arr/radarr/movies:/movies #optional
       - /media/arr/sonarr/tvseries:/tv #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # LIDARR
@@ -80,14 +88,16 @@ services:
     container_name: lidarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/lidarr/config:/config
       - /media/arr/lidarr/music:/music #optional
       - /media/arr/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # READARR
@@ -98,14 +108,16 @@ services:
     container_name: readarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/readarr/config:/config
       - /media/arr/readarr/books:/books #optional
       - /media/arr/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # QBITTORRENT		
@@ -116,15 +128,17 @@ services:
     container_name: qbittorrent
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
       - /media/arr/qbittorrent/config:/config
       - /media/arr/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # JELLYFIN	
@@ -134,9 +148,9 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /media/arr/jellyfin/config:/config
       - /media/arr/sonarr/tvseries:/data/tvshows
@@ -147,6 +161,8 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # GLUETUN
@@ -170,11 +186,19 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - VPN_TYPE=openvpn # or wireguard
-      - OPENVPN_USER=<your vpn user>
-      - OPENVPN_PASSWORD=<your vpn password>
-      - SERVER_COUNTRIES=Netherlands
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE} # or wireguard
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
       
 ############################
 
