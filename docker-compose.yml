@@ -155,6 +155,8 @@ services:
       - /media/arr/sabnzbd/config:/config
       #- /mount/nas/data/usenet:/data/usenet #optional
     restart: unless-stopped
+    env_file:
+      - .env
 
 ############################
 # JELLYFIN: Media server for streaming movies, shows, and music 
@@ -195,6 +197,8 @@ services:
     volumes:
       - /media/arr/jellyseerr/config:/app/config
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
 # GLUETUN: VPN gateway routing container traffic via WireGuard/OpenVPN  
