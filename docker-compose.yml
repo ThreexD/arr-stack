@@ -16,7 +16,7 @@ services:
     volumes:
       - ${VOLUMNE_PATH}/radarr/config:/config
       - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
-      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
     env_file:
       - .env
@@ -36,7 +36,7 @@ services:
     volumes:
       - ${VOLUMNE_PATH}/sonarr/config:/config
       - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
-      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
     env_file:
       - .env
@@ -94,7 +94,7 @@ services:
     volumes:
       - ${VOLUMNE_PATH}/lidarr/config:/config
       - ${VOLUMNE_PATH}/lidarr/music:/music #optional
-      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
     env_file:
       - .env
@@ -113,8 +113,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${VOLUMNE_PATH}/readarr/config:/config
-      - ${VOLUMNE_PATH}/readarr/books:/books #optional
-      - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/readarr/books:/books
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data 
     restart: unless-stopped
     env_file:
       - .env
@@ -153,6 +153,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${VOLUMNE_PATH}/sabnzbd/config:/config
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data/usenet
       #- /mount/nas/data/usenet:/data/usenet #optional
     restart: unless-stopped
     env_file:
