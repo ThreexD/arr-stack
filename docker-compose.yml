@@ -2,7 +2,7 @@
 services:
 
 ############################
-# RADARR
+# RADARR: TV show downloader and manager
 ############################
 
   radarr:
@@ -10,17 +10,19 @@ services:
     container_name: radarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/radarr/config:/config
-      - /media/arr/radarr/movies:/movies #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/radarr/config:/config
+      - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# SONARR
+# SONARR: TV show downloader and manager
 ############################
 
   sonarr:
@@ -28,17 +30,19 @@ services:
     container_name: sonarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/sonarr/config:/config
-      - /media/arr/sonarr/tvseries:/tv #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sonarr/config:/config
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# PROWLARR
+# PROWLARR: Indexer manager for Sonarr, Radarr, and Lidarr 
 ############################
 
   prowlarr:
@@ -46,15 +50,17 @@ services:
     container_name: prowlarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/prowlarr/config:/config
+      - ${VOLUMNE_PATH}/prowlarr/config:/config
     restart: unless-stopped
+    env_file:
+      - .env
 
 ############################
-# BAZARR
+# BAZARR: Subtitle downloader and manager for Sonarr and Radarr  
 ############################
 
   bazarr:
@@ -62,17 +68,19 @@ services:
     container_name: bazarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/bazarr/config:/config
-      - /media/arr/radarr/movies:/movies #optional
-      - /media/arr/sonarr/tvseries:/tv #optional
+      - ${VOLUMNE_PATH}/bazarr/config:/config
+      - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# LIDARR
+# LIDARR: Music downloader and manager for artists and albums
 ############################
 
   lidarr:
@@ -80,17 +88,19 @@ services:
     container_name: lidarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/lidarr/config:/config
-      - /media/arr/lidarr/music:/music #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/lidarr/config:/config
+      - ${VOLUMNE_PATH}/lidarr/music:/music #optional
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# READARR
+# READARR: Ebook and audiobook downloader and manager  
 ############################
 
   readarr:
@@ -98,58 +108,101 @@ services:
     container_name: readarr
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/readarr/config:/config
-      - /media/arr/readarr/books:/books #optional
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/readarr/config:/config
+      - ${VOLUMNE_PATH}/readarr/books:/books
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data 
     restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# QBITTORRENT		
+# QBITTORRENT: Torrent client with Web UI for automated downloads  
 ############################
 
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
+  #qbittorrent:
+  #  image: lscr.io/linuxserver/qbittorrent:latest
+  #  container_name: qbittorrent
+  #  network_mode: "service:gluetun"
+  #  environment:
+  #    - PUID=${PUID}
+  #    - PGID=${PGID}
+  #    - TZ=${TZ}
+  #    - WEBUI_PORT=8080
+  #    - TORRENTING_PORT=6881
+  #  volumes:
+  #    - ${VOLUMNE_PATH}/qbittorrent/config:/config
+  #    - ${VOLUMNE_PATH}/qbittorrent/downloads:/downloads #optional
+  #  restart: unless-stopped
+  #  env_file:
+  #    - .env
+
+############################
+#SABNZBD: Usenet download client with web-based interface
+############################
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
     network_mode: "service:gluetun"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - WEBUI_PORT=8080
-      - TORRENTING_PORT=6881
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/qbittorrent/config:/config
-      - /media/arr/qbittorrent/downloads:/downloads #optional
+      - ${VOLUMNE_PATH}/sabnzbd/config:/config
+      - ${VOLUMNE_PATH}/sabnzbd/data:/data/usenet
+      #- /mount/nas/data/usenet:/data/usenet #optional
     restart: unless-stopped
-    
+    env_file:
+      - .env
+
 ############################
-# JELLYFIN	
+# JELLYFIN: Media server for streaming movies, shows, and music 
 ############################
 
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /media/arr/jellyfin/config:/config
-      - /media/arr/sonarr/tvseries:/data/tvshows
-      - /media/arr/radarr/movies:/data/movies
+      - ${VOLUMNE_PATH}/jellyfin/config:/config
+      - ${VOLUMNE_PATH}/sonarr/tvseries:/data/tvshows
+      - ${VOLUMNE_PATH}/radarr/movies:/data/movies
     ports:
       - 8096:8096
       - 8920:8920 #optional
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+    env_file:
+      - .env
+
+############################
+# JELYSEER: Request management interface for Jellyfin users  
+############################
+
+  jellyseerr:
+    image: ghcr.io/fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    network_mode: "service:gluetun"
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+      - PORT=5055
+    volumes:
+      - ${VOLUMNE_PATH}/jellyseerr/config:/app/config
+    restart: unless-stopped
+    env_file:
+      - .env
     
 ############################
-# GLUETUN
+# GLUETUN: VPN gateway routing container traffic via WireGuard/OpenVPN  
 ############################
 
   gluetun:
@@ -162,19 +215,31 @@ services:
       - 6767:6767 #bazarr
       - 8686:8686 #lidarr
       - 8787:8787 #readarr
-      - 8080:8080 #qbittorrent
-      - 6881:6881 #qbittorrent
-      - 6881:6881/udp #qbittorrent
+      #- 8080:8080 #qbittorrent
+      #- 6881:6881 #qbittorrent
+      #- 6881:6881/udp #qbittorrent
+      - 8080:8080 # sabnzbd
+      - 9090:9090 # sabnzbd
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - VPN_TYPE=openvpn # or wireguard
-      - OPENVPN_USER=<your vpn user>
-      - OPENVPN_PASSWORD=<your vpn password>
-      - SERVER_COUNTRIES=Netherlands
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE} # or wireguard
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+      - DOT=off
+      - DNS=1.1.1.1,8.8.8.8
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
       
 ############################
 
