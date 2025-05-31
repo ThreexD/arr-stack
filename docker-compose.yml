@@ -17,7 +17,7 @@ services:
       - ${VOLUMNE_PATH}/radarr/config:/config
       - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
       - ${VOLUMNE_PATH}/sabnzbd/data:/data
-      - ${VOLUMNE_PATH}/sabnzbd/data/completed/movies/:/data/usenet
+      - ${VOLUMNE_PATH}/sabnzbd/data/complete/movies/:/data/usenet
     restart: unless-stopped
     env_file:
       - .env
@@ -175,8 +175,8 @@ services:
       - ${VOLUMNE_PATH}/jellyfin/config:/config
       - ${VOLUMNE_PATH}/sonarr/tvseries:/data/tvshows
       - ${VOLUMNE_PATH}/radarr/movies:/data/movies
-      - ${VOLUMNE_PATH}/sabnzbd/data/completed/movies/:/data/usenet/movies
-      - ${VOLUMNE_PATH}/sabnzbd/data/completed/tv/:/data/usenet/tvshows
+      - ${VOLUMNE_PATH}/sabnzbd/data/complete/movies/:/data/usenet/movies
+      - ${VOLUMNE_PATH}/sabnzbd/data/complete/tv/:/data/usenet/tvshows
     ports:
       - 8096:8096
       - 8920:8920 #optional
