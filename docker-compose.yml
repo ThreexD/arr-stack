@@ -236,7 +236,7 @@ services:
       - DOT=off
       - DNS=1.1.1.1,8.8.8.8
       - FIREWALL=on
-      - FIREWALL_OUTBOUND_SUBNETS=192.168.178.0/24
+      - FIREWALL_OUTBOUND_SUBNETS=${SUBNET}
     env_file:
       - .env
     healthcheck:
