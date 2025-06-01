@@ -191,7 +191,6 @@ services:
 
   jellyseerr:
     image: ghcr.io/fallenbagel/jellyseerr:latest
-    network_mode: "service:gluetun"
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
