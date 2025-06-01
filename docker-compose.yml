@@ -16,7 +16,7 @@ services:
     volumes:
       - ${VOLUMNE_PATH}/radarr/config:/config
       - ${VOLUMNE_PATH}/radarr/movies:/movies #optional
-      - ${VOLUMNE_PATH}/sabnzbd/data/complete/movies/:/data/usenet/complete/movies
+      - ${VOLUMNE_PATH}/sabnzbd/data/usenet/complete/movies:/data/usenet/complete/movies
     restart: unless-stopped
     env_file:
       - .env
@@ -36,7 +36,7 @@ services:
     volumes:
       - ${VOLUMNE_PATH}/sonarr/config:/config
       - ${VOLUMNE_PATH}/sonarr/tvseries:/tv #optional
-      - ${VOLUMNE_PATH}/sabnzbd/data/complete/tv/:/data/usenet/complete/tv
+      - ${VOLUMNE_PATH}/sabnzbd/data/usenet/complete/tv:/data/usenet/complete/tv
     restart: unless-stopped
     env_file:
       - .env
