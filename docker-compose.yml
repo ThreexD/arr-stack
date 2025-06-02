@@ -191,6 +191,7 @@ services:
 
   jellyseerr:
     image: ghcr.io/fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
